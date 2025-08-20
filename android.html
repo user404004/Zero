@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>محاكاة التحكم بالجهاز - Zero Azrael</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+    :root {
+      --bg: #0a0a0a;
+      --glass: rgba(10, 10, 10, 0.6);
+      --neon: #00ffc6;
+      --text: #e6f1ff;
+      --muted: #9aa4ad;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      font-family: 'Cairo', sans-serif;
+      display: flex;
+      height: 100vh;
+      color: var(--text);
+      overflow: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('bg.jpg') center/cover no-repeat;
+      filter: blur(6px) brightness(0.5);
+      z-index: -2;
+    }
+
+    .veil {
+      position: absolute; inset: 0;
+      background: var(--glass);
+      backdrop-filter: blur(8px);
+      z-index: -1;
+    }
+
+    .video-section {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(17,17,17,0.85);
+      padding: 20px;
+      border-radius: 16px;
+      margin: 10px;
+    }
+
+    .video-section video {
+      width: 270px;
+      height: 480px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 255, 198, 0.5);
+      object-fit: cover;
+    }
+
+    .control-panel {
+      flex: 1;
+      padding: 40px 30px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.7), rgba(15,15,15,0.85));
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: center;
+      overflow-y: auto;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
+
+    .control-panel h1 {
+      color: var(--neon);
+      margin-bottom: 30px;
+      font-size: 28px;
+      text-shadow: 0 0 10px var(--neon);
+    }
+
+    .buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 20px;
+      width: 100%;
+    }
+
+    button {
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background-color: var(--neon);
+      color: #000;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 255, 198, 0.5);
+    }
+
+    button:hover {
+      background-color: #0c0;
+      box-shadow: 0 0 25px rgba(0,255,198,0.7);
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--glass);
+      color: var(--neon);
+      padding: 25px 35px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(0,255,198,0.5);
+      z-index: 999;
+      font-size: 18px;
+      display: none;
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="veil"></div>
+
+  <div class="video-section">
+    <video src="phone-sim.mp4" autoplay muted loop></video>
+  </div>
+
+  <div class="control-panel">
+    <h1>لوحة التحكم</h1>
+    <div class="buttons-grid">
+      <button onclick="showPopup('✅ تم فتح الكاميرا')">تشغيل الكاميرا</button>
+      <button onclick="showPopup('✅ تم قفل الشاشة')">قفل الشاشة</button>
+      <button onclick="showPopup('✅ تم تشغيل الفلاش')">تشغيل الفلاش</button>
+      <button onclick="showPopup('✅ تم سحب الصور')">سحب الصور</button>
+      <button onclick="showPopup('✅ تم تسجيل الصوت')">تسجيل صوت</button>
+      <button onclick="showPopup('✅ تم تسجيل الشاشة')">تسجيل الشاشة</button>
+      <button onclick="showPopup('✅ تم مسح الرسائل')">مسح الرسائل</button>
+      <button onclick="showPopup('✅ تم تتبع الموقع')">تتبع الموقع</button>
+      <button onclick="showPopup('✅ تم إغلاق الجهاز')">إيقاف التشغيل</button>
+      <button onclick="showPopup('✅ تم إرسال ملف')">إرسال ملف</button>
+      <button onclick="showPopup('✅ تم جلب الأرقام')">جلب الأرقام</button>
+      <button onclick="showPopup('✅ تم تفعيل المايكروفون')">تشغيل المايك</button>
+      <button onclick="showPopup('✅ تم عرض الإشعارات')">عرض الإشعارات</button>
+      <button onclick="showPopup('✅ تم جلب سجل المكالمات')">سجل المكالمات</button>
+      <button onclick="showPopup('✅ تم الاتصال تلقائيًا')">إجراء اتصال</button>
+      <button onclick="showPopup('✅ تم إرسال رسالة')">إرسال رسالة</button>
+      <button onclick="showPopup('✅ تم تعطيل الواي فاي')">تعطيل WiFi</button>
+      <button onclick="showPopup('✅ تم فتح المتصفح')">فتح المتصفح</button>
+      <button onclick="showPopup('✅ تم التقاط صورة')">لقطة فورية</button>
+      <button onclick="showPopup('✅ تم تحميل ملفات')">تحميل ملفات</button>
+    </div>
+  </div>
+
+  <div class="popup" id="popup"></div>
+
+  <script>
+    function showPopup(message) {
+      const popup = document.getElementById("popup");
+      popup.innerText = message;
+      popup.style.display = "block";
+      setTimeout(() => {
+        popup.style.display = "none";
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

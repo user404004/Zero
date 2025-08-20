@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ادخال الرقم - Zero Azrael</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+    :root {
+      --bg: #0a0a0a;
+      --glass: rgba(10, 10, 10, 0.6);
+      --neon: #00ffc6;
+      --text: #e6f1ff;
+      --muted: #9aa4ad;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      font-family: 'Cairo', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: var(--text);
+      overflow: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('bg.jpg') center/cover no-repeat;
+      filter: blur(6px) brightness(0.5);
+      z-index: -2;
+    }
+
+    .veil {
+      position: absolute; inset: 0;
+      background: var(--glass);
+      backdrop-filter: blur(8px);
+      z-index: -1;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 20px;
+      padding: 20px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.7), rgba(15,15,15,0.85));
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
+
+    h2 {
+      font-size: clamp(22px, 4vw, 32px);
+      color: var(--neon);
+      text-shadow: 0 0 10px var(--neon);
+    }
+
+    input, button {
+      padding: 12px 16px;
+      font-size: 18px;
+      border-radius: 8px;
+      border: none;
+      width: 300px;
+      outline: none;
+    }
+
+    input {
+      background: #111;
+      color: var(--text);
+    }
+
+    button {
+      background: var(--neon);
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,255,198,0.5);
+    }
+
+    .loading {
+      margin-top: 30px;
+      font-size: 20px;
+      display: none;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="veil"></div>
+  <div class="container">
+    <h2>ادخل رقم الضحية مع كود الدولة</h2>
+    <input type="text" placeholder="+xxxxxxxxx" id="victimNumber">
+    <button onclick="connect()">بدء الاتصال</button>
+    <div class="loading" id="loading">⏳ جاري الاتصال لتنفيذ الثغرة...</div>
+  </div>
+
+  <script>
+    function connect() {
+      const number = document.getElementById("victimNumber").value.trim();
+      if (number !== '') {
+        document.getElementById("loading").style.display = "block";
+        setTimeout(() => {
+          window.location.href = 'android.html';
+        }, 60000);
+      } else {
+        alert("يرجى إدخال رقم صحيح");
+      }
+    }
+  </script>
+</body>
+</html>
