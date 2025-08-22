@@ -107,6 +107,20 @@
       border-bottom: 1px dashed var(--neon);
       padding-bottom: 2px;
     }
+
+    .error-msg {
+      margin-top: 10px;
+      color: var(--danger);
+      font-size: 0.95rem;
+      text-shadow: 0 0 6px rgba(255,43,106,0.6);
+      display: none;
+      animation: fadeIn .4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -117,6 +131,7 @@
 
     <input type="text" placeholder="ادخل كود الاشتراك هنا" id="code">
     <button onclick="goNext()">دخول</button>
+    <div class="error-msg" id="errorMsg">⚠️ الكود غير صحيح! الرجاء المحاولة مرة أخرى.</div>
 
     <a class="telegram-link" href="https://t.me/Azrael_X0" target="_blank">لشراء الكود تواصل معي</a>
   </div>
@@ -124,11 +139,14 @@
   <script>
     function goNext() {
       const code = document.getElementById('code').value.trim();
-      const correctCode = 'X12344@123'; // الكود الصحيح
+      const errorMsg = document.getElementById('errorMsg');
+      const correctCode = 'X12344@123';
+
       if(code === correctCode) {
+        errorMsg.style.display = "none";
         window.location.href = 'number.html';
       } else {
-        alert('الكود غير صحيح! الرجاء إدخال الكود الصحيح للمتابعة.');
+        errorMsg.style.display = "block";
       }
     }
   </script>
